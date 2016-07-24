@@ -1,0 +1,46 @@
+<div class="col-md-10 text-center col-md-offset-1"  ng-init="init(); getAll()">
+	<h1 ng-show="!activity.id">Add new Activity</h1>
+	<h1 ng-show="activity.id">Edit Activit</h1>
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label for="exampleInputName2">Id</label>
+			<input type="text" class="form-control" ng-disabled="true" id="exampleInputName2" ng-model="activity.id" placeholder="Id">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputEmail2">Name</label>
+			<input type="text" ng-model="activity.name" uib-typeahead="activitiese.name for activitiese in activities | filter:$viewValue | limitTo:8" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="exampleInputEmail2">Desription</label>
+			<input type="text" class="form-control"  id="exampleInputEmail2" ng-model="activity.descroption" placeholder="Activity">
+		</div>
+		<div class="form-group">
+			<span uib-rating ng-model="rate" max="max" read-only="isReadonly" on-hover="hoveringOver(value)" on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating"></span>
+			<span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar && !isReadonly">{{percent}}%</span>
+		</div>
+		<div class="form-group" ng-show="activity.updated">
+			<label for="exampleInputEmail2">Updated</label>
+			<input type="text" class="form-control" ng-disabled="true" id="exampleInputEmail2" ng-model="activity.updated | date:('yyyy-MM-dd HH:mm')" ng-disabled="sakriSave"  placeholder="Activity">
+		</div>
+		<div ng-hide="sakriSave">
+			<button type="submit" ng-click="sakriSave = true;" ng-disabled="!activity.name" class="btn btn-success">
+				Save
+			</button>
+		</div>
+		<span ng-show="activity.id">
+			<button type="submit" ng-click="remove(activity.id)" class="btn btn-success">
+				Delete
+			</button> </span>
+		<span ng-show="sakriSave">
+			<span>
+				<button type="submit" ng-click="pushOcenu(activity);save();" ng-disabled="!activity.name" class="btn btn-success">
+					Confirm
+				</button>
+				<button type="submit" ng-click="sakriSave = false;" ng-disabled="!activity.name" class="btn btn-success">
+					Revert
+				</button> </span>
+			</span>
+		</span>
+	</form>
+
+</div>

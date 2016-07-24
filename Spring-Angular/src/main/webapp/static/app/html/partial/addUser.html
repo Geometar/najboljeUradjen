@@ -1,0 +1,81 @@
+<div ng-init="init()" class="col-md-10 text-center col-md-offset-1">
+	<h1 ng-show="!user.id">Add new User</h1>
+	<h1 ng-show="user.id">Edit User</h1>
+	<form class="form-horizontal" name="frm">
+		<div class="form-group">
+			<label for="inputEmail3" class="col-sm-2 control-label">Firstname</label>
+			<div class="col-sm-10">
+				<input type="text" name="firstname" ng-minlength="2" ng-maxlength="10" required class="form-control" id="inputEmail3" ng-model="user.firstname"placeholder="firstname">
+				<span ng-show="frm.firstname.$dirty && frm.firstname.$error.minlength" class="red">Premalo slova </span>
+				<span ng-show="frm.firstname.$dirty && frm.firstname.$error.maxlength" class="red">Previse slova </span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputEmail3" class="col-sm-2 control-label">Lastname</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" name="lastname" ng-minlength="2" ng-maxlength="10" required ng-model="user.lastname" id="inputEmail3" placeholder="lastname">
+				<span ng-show="frm.lastname.$dirty && frm.lastname.$error.minlength" class="red">Premalo slova </span>
+				<span ng-show="frm.lastname.$dirty && frm.lastname.$error.maxlength" class="red">Previse slova </span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+			<div class="col-sm-10">
+				<input type="email" name="email"class="form-control" id="inputEmail3" ng-model="user.email" placeholder="email">
+				<span ng-show="frm.email.$dirty && frm.email.$error.email" class="red"> Not valid email </span>
+			</div>
+		</div>
+		<div class="form-group" ng-model="user.birth = dt">
+			<label for="inputEmail3" class="col-sm-2 control-label">Birth</label>
+			<div class="row">
+				<div class="col-md-6">
+					<p class="input-group">
+						<input type="text" name="date" ng-minlength="1" ng-change="checkIfDate()" class="form-control" initDate="user.birth" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open1()">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button> </span>
+					</p>
+				</div>
+				<span ng-show="!checkIfDate() && frm.date.$dirty || frm.date.$error.minlength" class="red">Date not valid</span>
+			</div>
+		</div>
+		<div ng-hide="user.id">
+			<div class="form-group">
+				<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+				<div class="col-sm-10">
+					<input type="password" name="ps1" ng-minlength="3" required class="form-control" id="inputPassword3" ng-model="user.password" placeholder="Password">
+					<span ng-show="frm.ps1.$error.minlength && frm.ps1.$dirty" class="red">Must have more then 3 characters</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="inputPassword3" class="col-sm-2 control-label">Confirm Password</label>
+				<div class="col-sm-10">
+					<input type="password" name="ps2" ng-minlength="3" required class="form-control" id="inputPassword3" ng-model="user.passwordConfirm" placeholder="ConfirmPassword">
+					<span ng-show="frm.ps2.$error.minlength && frm.ps2.$dirty" class="red">Must have more then 3 characters</span>
+				</div>
+			</div>
+			<span ng-show="frm.ps2.$dirty && frm.ps1.$dirty && frm.ps1.$error.invalid && (user.passwordConfirm!=user.password)" class="red">Passwords not same</span>
+		</div>
+		<div class="form-group">
+			<div ng-show="imali">
+				User vec postoji u bazi, da li ste sigurno da hocete da ga dodate?
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-success" ng-disabled="frm.$invalid || (user.passwordConfirm!=user.password) " ng-click="save()">
+						Create
+					</button>
+				</div>
+			</div>
+			<div class="col-sm-offset-2 col-sm-10" ng-hide="imali" ng-show="activity.id">
+				<button type="submit" class="btn btn-success" ng-disabled="frm.$invalid || (user.passwordConfirm!=user.password) " ng-click="findHim()">
+					Create
+				</button>
+			</div>
+			<div class="col-sm-offset-2 col-sm-10" ng-hide="imali" ng-show="activity.id==null">
+				<button type="submit" class="btn btn-success" ng-disabled="frm.$invalid" ng-click="findHim()">
+					Create
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

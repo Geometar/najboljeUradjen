@@ -1,0 +1,75 @@
+<div ng-init="init()">
+	<div class="col-md-10 text-center col-md-offset-1">
+		<div class="text-left">
+			<form ng-submit="getAll()">
+				Search
+				<input type="text" ng-model="search" ng-change="onChangeSearch()"/>
+				<button ng-click="page=0;currentPage=1;getAll()" class="btn btn-info btn-sm">
+					Enter
+				</button>
+				<button ng-click="search=null; brojElemenata=3; page=0 ; currentPage=1; getAll()"  class="btn btn-primary btn-sm">
+					Reset
+				</button>
+					Elemenata na stranici:
+				<select ng-model="brojElemenata" ng-change="page = 0; brojElemenata; getAll()">
+					<option ng-repeat="brisi in brisis" value={{brisi}}>{{brisi}}</option>
+				</select>
+			</form>
+		</div>
+		<table class="table table-striped table-hover table-bordered " ng-init="brojElemenata=4; getAll()">
+			<tr>
+				<th class="col-md-1 text-center">Id</th>
+				<th class="col-md-3 text-center">Name</th>
+				<th class="col-md-4 text-center">Desription</th>
+				<th class="col-md-1 text-center">Marks</th>
+				<th class="col-md-5 text-center">Actions</th>
+			</tr>
+			<tr ng-repeat="activity in activities">
+				<td class="col-md-1">{{activity.id}}</td>
+				<td class="col-md-3">{{activity.name}}</td>
+				<td class="col-md-4">{{activity.descroption}}</td>
+				<td class="col-md-1">{{srednjaVrednost(activity.ocene)| number:0}}<span class="glyphicon glyphicon-star"></span></td>
+				<td class="col-md-5"><span ng-show="deletebt">
+					<button class="btn btn-danger btn-xs" ng-show="deletebt" ng-click="deletebt=false">
+						Delete
+					</button> </span><span ng-hide="deletebt"> Are you sure?
+					<button class="button btn-danger btn-xs" ng-click="remove(activity.id)">
+						Yes
+					</button>
+					<button class="button btn-info btn-xs" ng-click="deletebt=true">
+						No
+					</button> </span><a href="/#/activities/edit/{{activity.id}}" class="btn btn-info btn-xs">Edit</a>
+			</tr>
+		</table>
+		<span ng-show="glyph" class="glyphicon glyphicon-refresh glyphicon-refresh-animate" aria-hidden="true"></span>
+		<div class="alert alert-warning alert-dismissible" role="alert" ng-show="izbrisan">
+			<button type="button" class="close" data-dismiss="alert" ng-click="izbrisan=false" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Deleted!</strong> Activity with id: {{deleted.id}} and name:{{deleted.name}} has been deleted
+		</div>
+		<div class="alert alert-warning alert-dismissible" role="alert" ng-show="izbrisan2">
+			<button type="button" class="close" data-dismiss="alert" ng-click="izbrisan2=false" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Greska!</strong> Activity with id: {{neuspelo.id}} and name:{{neuspelo.name}} hasnt been deleted
+		</div>
+		<ul uib-pagination total-items="totalElements" ng-model="currentPage" items-per-page="brojElemenata" ng-change="pageChanged()"></ul>
+		<div class="alert alert-warning alert-dismissible" role="alert" ng-show="moveAway">
+			<button type="button" class="close" data-dismiss="alert" ng-click="moveAway=false" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Warning!</strong> Activity page wont load.
+		</div>
+		<div class="text-right">
+			<button class="btn btn-info btn-sm" ng-click="page = page-1; getAll()" ng-disabled="page==0">
+				Previus
+			</button>
+			{{page+1}}-{{totalPages}}
+			<button class="btn btn-info btn-sm" ng-disabled="page+1==totalPages" ng-click="page = page+1; getAll()">
+				Next
+			</button>
+		</div>
+		<a href="/#/activities/add" class="btn btn-success btn-lg">Add Activity</a>
+	</div>
+</div>

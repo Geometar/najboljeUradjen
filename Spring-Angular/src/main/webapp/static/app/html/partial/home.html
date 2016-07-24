@@ -1,0 +1,21 @@
+<!-- Example row of columns -->
+<div class="row col-md-offset-2" >
+	<div class="col-md-5" ng-controller="ActivityController" ng-init="page=0; brojElemenata=1000; getAll()">
+		<h2>Activity <span class="badge">{{totalElements}}</span></h2>
+		<p>
+			Go and explore all Activity we have for you.
+		</p>
+		<p>
+			<a class="btn btn-default" href="/#/activities" role="button">View details &raquo;</a>
+		</p>
+	</div>
+	<div class="col-md-5" ng-controller="UserController" ng-init="page=0;getAll()">
+		<h2>User <span class="badge">{{totalElements}}</span></h2>
+		<p>
+			Go and explore, all Users we have in out database.
+		</p>
+		<p>
+			<a class="btn btn-default" href="/#/users" role="button">View details &raquo;</a>
+		</p>
+	</div>
+</div>
